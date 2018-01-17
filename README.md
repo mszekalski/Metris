@@ -18,7 +18,8 @@ Metris is based on the classic computer game Tetris. Pieces fall from the top of
 
 # Wireframe
 
-
+ ![alt text] (https://github.com/mszekalski/Metris/blob/master/Metris.png)
+ 
 # Architecture and Technologies 
 
   -Javascript for logic
