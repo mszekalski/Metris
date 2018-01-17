@@ -37,10 +37,22 @@ Metris is based on the classic computer game Tetris. Pieces fall from the top of
    -Game logic including score, resetting, pausing and starting <br />
 
 # Implementation Timeline
-  # Day 1
+  Day 1 <br />
+   -Setup file structure, get webapck running, write entry file, set up file structure. Grasp an understanding of canvas  and consider what else will be needed to be made or borken down. <br />
+   -Render something up on the screen <br />
   
-  # Day 2 
+  Day 2 <br />
+  -Work on the board and game files.  <br />
+  -Try and create and render the game board up on the screen. <br />
+  -Look into the logic that will be necessary to connect these two and make the game start, reset, pause and keep score. <br />
   
-  # Day 3
+  Day 3 <br />
+  -Work on the pieces.  <br />
+  -Understand what logic will be necessary there to manipuilate them (rotate, move) <br />
+  -At the end of the day be able to render the pieces and have them move down the screen. <br />
   
-  # Day 4
+  Day 4 <br />
+  -Try and tie it all together. <br />
+  -Add controls <br />
+  -Add necessary styling <br />
+  -Have a working version of the game <br />
