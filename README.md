@@ -22,16 +22,19 @@ Metris is based on the classic computer game Tetris. Pieces fall from the top of
  
 # Architecture and Technologies 
 
-  -Javascript for logic
-  -HTML5 Canvas for styling
-  -CSS for styling
+  -Javascript for logic <br />
+  -HTML5 Canvas for styling <br />
+  -CSS for styling <br />
   
-  # board.js
-  
-  # piece.js
-  
-  # game.js
-  
+  board.js <br />
+   -Should hold all the logic for the board, including rendering and if a full line has been completed or if the game is over
+   
+  piece.js <br /> 
+   -Holds logic for pieces including randomization, rotation, movement, appearance.  
+   -May need seperate files for the different pieces.  
+   
+  game.js <br />
+   -Game logic including score, resetting, pausing and starting <br />
 
 # Implementation Timeline
   # Day 1
