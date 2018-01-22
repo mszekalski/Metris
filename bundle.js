@@ -131,28 +131,67 @@ class Board {
     this.pieces = [];
     this.piece = this.addPiece();
     this.bindEvents();
-    this.floor = [[0],[0],[0],[0],[0],[0],[0],[0],[0],[0]];
+    this.grid = new Array(20);
+    for (let i = 0; i < this.grid.length; i++){
+      this.grid[i] = new Array(10);
+    }
   }
 
   bindEvents() {
     document.addEventListener('keydown', this.handleKeyPress.bind(this));
+
   }
 
   handleKeyPress(e) {
-    if (e.key === "ArrowLeft" && this.piece.pos[0] !== 0) {
-      this.piece.pos[0] -= 25;
+    if (e.key === "ArrowLeft") {
+      this.piece.squares.forEach(coordinates => {
+        if (coordinates[0] === 0) {
+          console.loog('no');
+        }
+      });
+      for (let i = 0; i < this.piece.squares.length; i++){
+        this.piece.squares[i][0] -= 25;
+      }
+
+      // this.piece.squares.forEach(coordinates => {
+      //
+      // });
     }
-    if (e.key === "ArrowRight" && this.piece.pos[0] < 200) {
-      this.piece.pos[0] += 25;
+    if (e.key === "ArrowRight") {
+      this.piece.squares.forEach(coordinates => {
+        if (coordinates[0] === 225) {
+          console.loog('no');
+        }
+      });
+      for (let i = 0; i < this.piece.squares.length; i++){
+        this.piece.squares[i][0] += 25;
+      }
+      // this.piece.squares.forEach(coordinates => {
+      //
+      // });
     }
-    if (e.key === "ArrowDown" && this.piece.pos[1] < 390) {
-      (this.piece.pos[1] += 10);
-    }
+
+    // if (e.key === "ArrowLeft" && this.piece.pos[0] !== 0) {
+    //   this.piece.pos[0] -= 25;
+    // }
+    // if (e.key === "ArrowRight" && this.piece.pos[0] < 200) {
+    //   this.piece.pos[0] += 25;
+    // }
+    // if (e.key === "ArrowDown" && this.piece.pos[1] < 390) {
+    //   (this.piece.pos[1] += 10);
+    // }
   }
 
   render(ctx) {
     var currentPiece = this.pieces[this.pieces.length - 1];
     this.pieces.forEach(piece => {
+      currentPiece.squares.forEach(coordinates => {
+
+        if ((this.grid[coordinates[0]/25][coordinates[1]/25]) === 'filled') {
+          currentPiece.landed = true;
+          
+        }
+      });
       // if ((currentPiece.pos[1] + 100 >= piece.pos[1]) && (currentPiece !== piece)){
       //   currentPiece.landed = true;
       // }
@@ -160,6 +199,10 @@ class Board {
     });
 
     if (this.piece.landed) {
+      // this.grid[this.piece.pos[0]/25][this.piece.pos[1]/25] = 'filled';
+      this.piece.squares.forEach(coordinates => {
+        this.grid[coordinates[0]/25][coordinates[1]/25] = 'filled';
+      });
 
       this.piece = this.addPiece();
     } else {
@@ -205,77 +248,103 @@ function randomColor() {
   return color;
 }
 
-// const PIECE_TYPES = ['I' ,'O' ,'T','S','Z','J','L'];
+
 const PIECE_TYPES = [
   'I',
+  // ,
   'O',
   'T',
   'S',
   'Z',
   'J',
-  'L'];
+  'L'
+];
 
 class Piece {
 
   constructor() {
     this.type = PIECE_TYPES[Math.floor(Math.random() * PIECE_TYPES.length)];
-    this.pos = [100, 0];
+    // this.pos = [125, 0];
     this.landed = false;
     this.color = randomColor();
+    if (this.type === 'I') {
+      this.squares = [
+      [75,0],
+      [100,0],
+      [125,0],
+      [150,0]
+    ];
+  } else if (this.type === 'O') {
+      this.squares = [
+      [100,0],
+      [125,0],
+      [100,25],
+      [125,25]
+      ];
+    }
+    else if (this.type === 'T') {
+      this.squares = [
+      [100,0],
+      [125,0],
+      [150,0],
+      [125,25]
+      ];
+    }
+    else if (this.type === 'S') {
+      this.squares = [
+      [100,25],
+      [125,25],
+      [125,0],
+      [150,0]
+      ];
+    }
+    else if (this.type === 'Z') {
+      this.squares = [
+      [100,0],
+      [125,0],
+      [125,25],
+      [150,25]
+      ];
+    }
+    else if (this.type === 'J') {
+      this.squares = [
+      [100,0],
+      [125,0],
+      [150,0],
+      [150,25]
+      ];
+    }
+    else if (this.type === 'L') {
+      this.squares = [
+      [100,0],
+      [100,25],
+      [125,0],
+      [150,0]
+      ];
+    }
   }
+
+
+
 
   draw (ctx) {
     ctx.fillStyle = this.color;
-    if (this.type === 'O') {
-      ctx.fillRect(this.pos[0], this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0] + 25), this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0]), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] + 25), this.pos[1] + 25, 25, 25);
-    }
-    else if (this.type === 'I') {
-      ctx.fillRect(this.pos[0], this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0] + 25), this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0] + 50), this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0] + 75), this.pos[1], 25, 25);
-    }
-    else if (this.type === 'T') {
-      ctx.fillRect(this.pos[0], this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0]), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] + 25), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] - 25), this.pos[1] + 25, 25, 25);
-    }
-    else if (this.type === 'S') {
-      ctx.fillRect(this.pos[0], this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0] + 25), this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0]), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] - 25), this.pos[1] + 25, 25, 25);
-    }
-    else if (this.type === 'Z') {
-      ctx.fillRect(this.pos[0], this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0] - 25), this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0]), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] + 25), this.pos[1] + 25, 25, 25);
-    }
-    else if (this.type === 'J') {
-      ctx.fillRect(this.pos[0], this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0]), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] + 25), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] + 50), this.pos[1] + 25, 25, 25);
-    }
-    else if (this.type === 'L') {
-      ctx.fillRect(this.pos[0], this.pos[1], 25, 25);
-      ctx.fillRect((this.pos[0]), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] - 25), this.pos[1] + 25, 25, 25);
-      ctx.fillRect((this.pos[0] - 50), this.pos[1] + 25, 25, 25);
-    }
+      ctx.fillRect(this.squares[0][0], this.squares[0][1], 25, 25);
+      ctx.fillRect(this.squares[1][0], this.squares[1][1], 25, 25);
+      ctx.fillRect(this.squares[2][0], this.squares[2][1], 25, 25);
+      ctx.fillRect(this.squares[3][0], this.squares[3][1], 25, 25);
   }
 
   down(ctx) {
     if (this.landed) return;
-      this.pos[1] += 1;
-        if (this.pos[1] >= (900 - this.pos[1])) {
-          this.landed = true;
-        }
+      for (let i = 0; i < this.squares.length; i++) {
+        this.squares[i][1] += 1;
+        this.squares.forEach(coordinates => {
+          if (coordinates[1] > 475) {
+            this.landed = true;
+          }
+        });
+      }
   }
 }
 
