@@ -138,7 +138,6 @@ class Board {
 
   bindEvents() {
     document.addEventListener('keydown', this.handleKeyPress.bind(this));
-
   }
 
   handleKeyPress(e) {
@@ -154,15 +153,11 @@ class Board {
       for (let i = 0; i < this.piece.squares.length; i++){
         this.piece.squares[i][0] -= 25;
       }
-
-      // this.piece.squares.forEach(coordinates => {
-      //
-      // });
     }
     if (e.key === "ArrowRight") {
       for (let i = 0; i < this.piece.squares.length; i++){
         let x = this.piece.squares[i][0];
-          let y = this.piece.squares[i][1];
+        let y = this.piece.squares[i][1];
         if (x === 225 || (this.grid[Math.ceil(y/25)][Math.ceil(x/25)+1] === 'filled')) {
           return;
         }
@@ -170,55 +165,42 @@ class Board {
       for (let i = 0; i < this.piece.squares.length; i++){
         this.piece.squares[i][0] += 25;
       }
-      // this.piece.squares.forEach(coordinates => {
-      //
-      // });
     }
 
-    // if (e.key === "ArrowLeft" && this.piece.pos[0] !== 0) {
-    //   this.piece.pos[0] -= 25;
-    // }
-    // if (e.key === "ArrowRight" && this.piece.pos[0] < 200) {
-    //   this.piece.pos[0] += 25;
-    // }
-    // if (e.key === "ArrowDown" && this.piece.pos[1] < 390) {
-    //   (this.piece.pos[1] += 10);
-    // }
+    if (e.key === "ArrowDown") {
+      for (let i = 0; i < this.piece.squares.length; i++){
+        let x = this.piece.squares[i][0];
+        let y = this.piece.squares[i][1];
+        if (typeof this.grid[Math.ceil((y/25)) + 1] === "undefined"
+         || (this.grid[Math.ceil(y/25) + 1][Math.ceil(x/25)] === 'filled')) {
+          return;
+        }
+      }
+      for (let i = 0; i < this.piece.squares.length; i++){
+        this.piece.squares[i][1] += 20;
+      }
+    }
   }
 
   render(ctx) {
     var currentPiece = this.pieces[this.pieces.length - 1];
     this.pieces.forEach(piece => {
       currentPiece.squares.forEach(coordinates => {
-
         if (typeof this.grid[Math.floor((coordinates[1]/25)) + 1] === "undefined" ||
         this.grid[Math.floor((coordinates[1]/25)) + 1][(coordinates[0]/25)] === 'filled') {
-
-
           currentPiece.landed = true;
-
         }
       });
-      // if ((currentPiece.pos[1] + 100 >= piece.pos[1]) && (currentPiece !== piece)){
-      //   currentPiece.landed = true;
-      // }
       piece.draw(ctx);
-
     });
     if (this.piece.landed) {
-      // this.grid[this.piece.pos[0]/25][this.piece.pos[1]/25] = 'filled';
       this.piece.squares.forEach(coordinates => {
-
         this.grid[Math.floor(coordinates[1]/25)][coordinates[0]/25] = 'filled';
-        
       });
-
       this.piece = this.addPiece();
     } else {
       this.piece.down(ctx);
     }
-
-
   }
 
   start(ctx) {
@@ -230,7 +212,6 @@ class Board {
   addPiece() {
     const piece = new __WEBPACK_IMPORTED_MODULE_0__piece__["a" /* default */]();
     this.pieces.push(piece);
-
     return piece;
   }
 
