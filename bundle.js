@@ -146,8 +146,8 @@ class Board {
       for (let i = 0; i < this.piece.squares.length; i++){
         let x = this.piece.squares[i][0];
         let y = this.piece.squares[i][1];
-        if (x === 0 || (this.grid[(y/25)][Math.ceil(x/25)-1] === 'filled')) {
-          debugger
+        if (x === 0 || (this.grid[Math.ceil(y/25)][Math.ceil(x/25)-1] === 'filled')
+        ) {
           return;
         }
       }
@@ -162,7 +162,8 @@ class Board {
     if (e.key === "ArrowRight") {
       for (let i = 0; i < this.piece.squares.length; i++){
         let x = this.piece.squares[i][0];
-        if (x === 225) {
+          let y = this.piece.squares[i][1];
+        if (x === 225 || (this.grid[Math.ceil(y/25)][Math.ceil(x/25)+1] === 'filled')) {
           return;
         }
       }
@@ -189,8 +190,13 @@ class Board {
     var currentPiece = this.pieces[this.pieces.length - 1];
     this.pieces.forEach(piece => {
       currentPiece.squares.forEach(coordinates => {
-        if (this.grid[(coordinates[0]/25)][(coordinates[1]/25) + 1] === 'filled') {
+
+        if (typeof this.grid[Math.floor((coordinates[1]/25)) + 1] === "undefined" ||
+        this.grid[Math.floor((coordinates[1]/25)) + 1][(coordinates[0]/25)] === 'filled') {
+
+
           currentPiece.landed = true;
+
         }
       });
       // if ((currentPiece.pos[1] + 100 >= piece.pos[1]) && (currentPiece !== piece)){
@@ -202,8 +208,9 @@ class Board {
     if (this.piece.landed) {
       // this.grid[this.piece.pos[0]/25][this.piece.pos[1]/25] = 'filled';
       this.piece.squares.forEach(coordinates => {
-        this.grid[coordinates[0]/25][coordinates[1]/25] = 'filled';
 
+        this.grid[Math.floor(coordinates[1]/25)][coordinates[0]/25] = 'filled';
+        
       });
 
       this.piece = this.addPiece();
