@@ -104,7 +104,6 @@ class Game {
   }
 
   render(ctx) {
-
     this.ctx.clearRect(0, 0, 300, 500);
     this.board.render(this.ctx);
     requestAnimationFrame(this.render.bind(this));
@@ -144,11 +143,14 @@ class Board {
 
   handleKeyPress(e) {
     if (e.key === "ArrowLeft") {
-      this.piece.squares.forEach(coordinates => {
-        if (coordinates[0] === 0) {
-          console.loog('no');
+      for (let i = 0; i < this.piece.squares.length; i++){
+        let x = this.piece.squares[i][0];
+        let y = this.piece.squares[i][1];
+        if (x === 0 || (this.grid[(y/25)][Math.ceil(x/25)-1] === 'filled')) {
+          debugger
+          return;
         }
-      });
+      }
       for (let i = 0; i < this.piece.squares.length; i++){
         this.piece.squares[i][0] -= 25;
       }
@@ -158,11 +160,12 @@ class Board {
       // });
     }
     if (e.key === "ArrowRight") {
-      this.piece.squares.forEach(coordinates => {
-        if (coordinates[0] === 225) {
-          console.loog('no');
+      for (let i = 0; i < this.piece.squares.length; i++){
+        let x = this.piece.squares[i][0];
+        if (x === 225) {
+          return;
         }
-      });
+      }
       for (let i = 0; i < this.piece.squares.length; i++){
         this.piece.squares[i][0] += 25;
       }
@@ -186,28 +189,29 @@ class Board {
     var currentPiece = this.pieces[this.pieces.length - 1];
     this.pieces.forEach(piece => {
       currentPiece.squares.forEach(coordinates => {
-
-        if ((this.grid[coordinates[0]/25][coordinates[1]/25]) === 'filled') {
+        if (this.grid[(coordinates[0]/25)][(coordinates[1]/25) + 1] === 'filled') {
           currentPiece.landed = true;
-          
         }
       });
       // if ((currentPiece.pos[1] + 100 >= piece.pos[1]) && (currentPiece !== piece)){
       //   currentPiece.landed = true;
       // }
       piece.draw(ctx);
-    });
 
+    });
     if (this.piece.landed) {
       // this.grid[this.piece.pos[0]/25][this.piece.pos[1]/25] = 'filled';
       this.piece.squares.forEach(coordinates => {
         this.grid[coordinates[0]/25][coordinates[1]/25] = 'filled';
+
       });
 
       this.piece = this.addPiece();
     } else {
       this.piece.down(ctx);
     }
+
+
   }
 
   start(ctx) {
@@ -323,9 +327,6 @@ class Piece {
       ];
     }
   }
-
-
-
 
   draw (ctx) {
     ctx.fillStyle = this.color;
