@@ -241,37 +241,39 @@ class Board {
           }
         }
         if (this.piece.type === 'T') {
+          this.rotationCheck();
           if (this.piece.rotations === 0){
             this.piece.squares[0][0] += 25
             this.piece.squares[0][1] -= 25
             this.piece.squares[2][0] -= 25
-            this.piece.squares[2][1] += 25
-            this.piece.squares[3][0] -= 50
-            this.piece.squares[3][1] += 50
+            this.piece.squares[2][1] -= 25
+            this.piece.squares[2][1] += 50
+            this.piece.squares[3][0] -= 25
+            this.piece.squares[3][1] -= 25
             this.piece.rotations += 1;
           } else if (this.piece.rotations === 1){
+            this.piece.squares[0][0] += 25
+            this.piece.squares[0][1] += 25
+            this.piece.squares[2][0] -= 25
+            this.piece.squares[2][1] -= 25
+            this.piece.squares[3][0] += 25
+            this.piece.squares[3][1] -= 25
+            this.piece.rotations += 1;
+          } else if (this.piece.rotations === 2){
             this.piece.squares[0][0] -= 25
             this.piece.squares[0][1] += 25
             this.piece.squares[2][0] += 25
             this.piece.squares[2][1] -= 25
-            this.piece.squares[3][0] += 50
-            this.piece.squares[3][1] -= 50
-            this.piece.rotations += 1;
-          } else if (this.piece.rotations === 2){
-            this.piece.squares[0][0] += 25
-            this.piece.squares[0][1] -= 25
-            this.piece.squares[2][0] -= 25
-            this.piece.squares[2][1] += 25
-            this.piece.squares[3][0] -= 50
-            this.piece.squares[3][1] += 50
+            this.piece.squares[3][0] += 25
+            this.piece.squares[3][1] += 25
             this.piece.rotations += 1;
           } else if (this.piece.rotations === 3){
             this.piece.squares[0][0] -= 25
-            this.piece.squares[0][1] += 25
+            this.piece.squares[0][1] -= 25
             this.piece.squares[2][0] += 25
-            this.piece.squares[2][1] -= 25
-            this.piece.squares[3][0] += 50
-            this.piece.squares[3][1] -= 50
+            this.piece.squares[2][1] += 25
+            this.piece.squares[3][0] -= 25
+            this.piece.squares[3][1] += 25
             this.piece.rotations = 0;
           }
         }
@@ -353,7 +355,7 @@ function randomColor() {
 
 
 const PIECE_TYPES = [
-  'I',
+  // 'I',
   // ,
   // 'O',
   'T'
