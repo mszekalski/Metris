@@ -133,6 +133,22 @@ class Board {
     this.grid = new Array(20);
     for (let i = 0; i < this.grid.length; i++){
       this.grid[i] = new Array(10);
+
+    }
+  }
+  rotationCheck() {
+    for (let i = 0; i < this.piece.squares.length; i++) {
+      let x = this.piece.squares[i][0];
+      let y = this.piece.squares[i][1];
+      if ((this.piece.squares[i][0] === 0) ||
+      this.piece.squares[i][0] === 225 && this.piece.rotations % 2 !== 0 ||
+      this.piece.squares[i][0] === 200 && this.piece.rotations % 2 !== 0 ||
+      (this.grid[Math.ceil(y/25) - 2][Math.ceil(x/25) + 2] === 'filled') ||
+      (this.grid[Math.ceil(y/25) - 1][Math.ceil(x/25) + 1] === 'filled') ||
+      (this.grid[Math.ceil(y/25) + 2][Math.ceil(x/25) - 2] === 'filled') ||
+      (this.grid[Math.ceil(y/25) + 1][Math.ceil(x/25) - 1] === 'filled')) {
+        return true;
+      }
     }
   }
 
@@ -141,6 +157,7 @@ class Board {
   }
 
   handleKeyPress(e) {
+
     if (e.key === "ArrowLeft") {
       for (let i = 0; i < this.piece.squares.length; i++){
         let x = this.piece.squares[i][0];
@@ -167,6 +184,8 @@ class Board {
       }
     }
 
+
+
     if (e.key === "ArrowDown") {
       for (let i = 0; i < this.piece.squares.length; i++){
         let x = this.piece.squares[i][0];
@@ -180,7 +199,93 @@ class Board {
         this.piece.squares[i][1] += 20;
       }
     }
+
+      if (e.key === "r" || e.key === "R") {
+        if (this.piece.type === 'O'){
+          return;
+        }
+        if (this.piece.type === 'I') {
+          if (this.rotationCheck()) return;
+          if (this.piece.rotations === 0){
+            this.piece.squares[0][0] += 25;
+            this.piece.squares[0][1] -= 25;
+            this.piece.squares[2][0] -= 25;
+            this.piece.squares[2][1] += 25;
+            this.piece.squares[3][0] -= 50;
+            this.piece.squares[3][1] += 50;
+            this.piece.rotations += 1;
+          } else if (this.piece.rotations === 1){
+            this.piece.squares[0][0] -= 25;
+            this.piece.squares[0][1] += 25;
+            this.piece.squares[2][0] += 25;
+            this.piece.squares[2][1] -= 25;
+            this.piece.squares[3][0] += 50;
+            this.piece.squares[3][1] -= 50;
+            this.piece.rotations += 1;
+          } else if (this.piece.rotations === 2){
+            this.piece.squares[0][0] += 25;
+            this.piece.squares[0][1] -= 25;
+            this.piece.squares[2][0] -= 25;
+            this.piece.squares[2][1] += 25;
+            this.piece.squares[3][0] -= 50;
+            this.piece.squares[3][1] += 50;
+            this.piece.rotations += 1;
+          } else if (this.piece.rotations === 3){
+            this.piece.squares[0][0] -= 25;
+            this.piece.squares[0][1] += 25;
+            this.piece.squares[2][0] += 25;
+            this.piece.squares[2][1] -= 25;
+            this.piece.squares[3][0] += 50;
+            this.piece.squares[3][1] -= 50;
+            this.piece.rotations = 0;
+          }
+        }
+        if (this.piece.type === 'T') {
+          if (this.piece.rotations === 0){
+            this.piece.squares[0][0] += 25
+            this.piece.squares[0][1] -= 25
+            this.piece.squares[2][0] -= 25
+            this.piece.squares[2][1] += 25
+            this.piece.squares[3][0] -= 50
+            this.piece.squares[3][1] += 50
+            this.piece.rotations += 1;
+          } else if (this.piece.rotations === 1){
+            this.piece.squares[0][0] -= 25
+            this.piece.squares[0][1] += 25
+            this.piece.squares[2][0] += 25
+            this.piece.squares[2][1] -= 25
+            this.piece.squares[3][0] += 50
+            this.piece.squares[3][1] -= 50
+            this.piece.rotations += 1;
+          } else if (this.piece.rotations === 2){
+            this.piece.squares[0][0] += 25
+            this.piece.squares[0][1] -= 25
+            this.piece.squares[2][0] -= 25
+            this.piece.squares[2][1] += 25
+            this.piece.squares[3][0] -= 50
+            this.piece.squares[3][1] += 50
+            this.piece.rotations += 1;
+          } else if (this.piece.rotations === 3){
+            this.piece.squares[0][0] -= 25
+            this.piece.squares[0][1] += 25
+            this.piece.squares[2][0] += 25
+            this.piece.squares[2][1] -= 25
+            this.piece.squares[3][0] += 50
+            this.piece.squares[3][1] -= 50
+            this.piece.rotations = 0;
+          }
+        }
+
+
+      }
+
+
+
   }
+
+
+
+
 
   render(ctx) {
     var currentPiece = this.pieces[this.pieces.length - 1];
@@ -189,6 +294,7 @@ class Board {
         if (typeof this.grid[Math.floor((coordinates[1]/25)) + 1] === "undefined" ||
         this.grid[Math.floor((coordinates[1]/25)) + 1][(coordinates[0]/25)] === 'filled') {
           currentPiece.landed = true;
+
         }
       });
       piece.draw(ctx);
@@ -197,6 +303,11 @@ class Board {
       this.piece.squares.forEach(coordinates => {
         this.grid[Math.floor(coordinates[1]/25)][coordinates[0]/25] = 'filled';
       });
+      for (let i = 0; i < this.piece.squares.length; i++) {
+        let x = this.piece.squares[i][0];
+        let y = this.piece.squares[i][1];
+
+      }
       this.piece = this.addPiece();
     } else {
       this.piece.down(ctx);
@@ -244,12 +355,12 @@ function randomColor() {
 const PIECE_TYPES = [
   'I',
   // ,
-  'O',
-  'T',
-  'S',
-  'Z',
-  'J',
-  'L'
+  // 'O',
+  'T'
+  // 'S',
+  // 'Z',
+  // 'J',
+  // 'L'
 ];
 
 class Piece {
@@ -314,6 +425,7 @@ class Piece {
       [150,0]
       ];
     }
+    this.rotations = 0;
   }
 
   draw (ctx) {
@@ -331,6 +443,7 @@ class Piece {
         this.squares.forEach(coordinates => {
           if (coordinates[1] > 475) {
             this.landed = true;
+
           }
         });
       }
