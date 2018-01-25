@@ -196,8 +196,6 @@ class Board {
       }
     }
 
-
-
     if (e.key === "ArrowDown") {
       for (let i = 0; i < this.piece.squares.length; i++){
         let x = this.piece.squares[i][0];
@@ -227,29 +225,29 @@ class Board {
               this.piece.squares[3][1] += 50;
               this.piece.rotations += 1;
           } else if (this.piece.rotations === 1){
-            this.piece.squares[0][0] += 25;
-            this.piece.squares[0][1] += 50;
-            this.piece.squares[1][1] += 25;
-            this.piece.squares[2][0] -= 25;
-            this.piece.squares[3][0] -= 50;
-            this.piece.squares[3][1] -= 25;
-            this.piece.rotations += 1;
+              this.piece.squares[0][0] += 25;
+              this.piece.squares[0][1] += 50;
+              this.piece.squares[1][1] += 25;
+              this.piece.squares[2][0] -= 25;
+              this.piece.squares[3][0] -= 50;
+              this.piece.squares[3][1] -= 25;
+              this.piece.rotations += 1;
           } else if (this.piece.rotations === 2){
-            this.piece.squares[0][0] -= 50;
-            this.piece.squares[0][1] += 25;
-            this.piece.squares[1][0] -= 25;
-            this.piece.squares[2][1] -= 25;
-            this.piece.squares[3][0] += 25;
-            this.piece.squares[3][1] -= 50;
-            this.piece.rotations += 1;
+              this.piece.squares[0][0] -= 50;
+              this.piece.squares[0][1] += 25;
+              this.piece.squares[1][0] -= 25;
+              this.piece.squares[2][1] -= 25;
+              this.piece.squares[3][0] += 25;
+              this.piece.squares[3][1] -= 50;
+              this.piece.rotations += 1;
           } else if (this.piece.rotations === 3){
-            this.piece.squares[0][0] -= 25;
-            this.piece.squares[0][1] -= 50;
-            this.piece.squares[1][1] -= 25;
-            this.piece.squares[2][0] += 25;
-            this.piece.squares[3][0] += 50;
-            this.piece.squares[3][1] += 25;
-            this.piece.rotations = 0;
+              this.piece.squares[0][0] -= 25;
+              this.piece.squares[0][1] -= 50;
+              this.piece.squares[1][1] -= 25;
+              this.piece.squares[2][0] += 25;
+              this.piece.squares[3][0] += 50;
+              this.piece.squares[3][1] += 25;
+              this.piece.rotations = 0;
           }
         }
         if (this.piece.type === 'T') {
@@ -340,8 +338,6 @@ class Board {
               this.piece.squares[1][1] += 25;
               this.piece.squares[3][0] -= 25;
               this.piece.squares[3][1] -= 25;
-
-
               this.piece.rotations += 1;
             }
             else if (this.piece.rotations === 2){
@@ -432,19 +428,9 @@ class Board {
               this.piece.squares[3][1] += 25;
               this.piece.rotations = 0;
             }
-
         }
-
-
       }
-
-
-
   }
-
-
-
-
 
   render(ctx) {
     var currentPiece = this.pieces[this.pieces.length - 1];
@@ -467,14 +453,14 @@ class Board {
           this.grid.splice(i, 1);
           this.grid.unshift(new Array(10));
           for (let j = 0; j < this.pieces.length; j++) {
-            for (let k = 0; k < this.pieces[j].sqaures.length; k++){
-
+            for (let k = 0; k < this.pieces[j].squares.length; k++){
+              if ((this.pieces[j].squares[k][1])/25 === i) {
+                this.pieces[j].squares[k].splice(k);
+                console.log(`delete row ${i}`);
+              }
             }
           }
         }
-
-
-
       }
       this.piece = this.addPiece();
     } else {
@@ -487,13 +473,11 @@ class Board {
       this.bindEvents();
   }
 
-
   addPiece() {
     const piece = new __WEBPACK_IMPORTED_MODULE_0__piece__["a" /* default */]();
     this.pieces.push(piece);
     return piece;
   }
-
 }
 
 /* harmony default export */ __webpack_exports__["a"] = (Board);
