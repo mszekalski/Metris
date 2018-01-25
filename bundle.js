@@ -450,6 +450,8 @@ class Board {
       });
       for (let i = this.grid.length - 1; i >= 0; i--) {
         if (this.grid[i].every(el => el === 'filled')) {
+          this.grid.splice(i, 1);
+          this.grid.unshift(new Array(10));
           for (let j = 0; j < this.pieces.length; j++) {
             for (let k = this.pieces[j].squares.length - 1; k >= 0; k--){
               if ((this.pieces[j].squares[k][1])/25 === i) {
@@ -458,8 +460,6 @@ class Board {
               }
             }
           }
-          this.grid.splice(i, 1);
-          this.grid.unshift(new Array(10));
         }
       }
       this.piece = this.addPiece();
@@ -581,10 +581,9 @@ class Piece {
 
   draw (ctx) {
     ctx.fillStyle = this.color;
-      ctx.fillRect(this.squares[0][0], this.squares[0][1], 25, 25);
-      ctx.fillRect(this.squares[1][0], this.squares[1][1], 25, 25);
-      ctx.fillRect(this.squares[2][0], this.squares[2][1], 25, 25);
-      ctx.fillRect(this.squares[3][0], this.squares[3][1], 25, 25);
+    for (let i = 0; i < this.squares.length; i++) {
+      ctx.fillRect(this.squares[i][0], this.squares[i][1], 25, 25);
+    }
   }
 
   down(ctx) {
