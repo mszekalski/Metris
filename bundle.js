@@ -143,13 +143,20 @@ class Board {
       let x = this.piece.squares[i][0];
       let y = this.piece.squares[i][1];
       if ((this.piece.squares[i][0] === 0 && this.piece.rotations % 2 !== 0) ||
+      (this.piece.squares[i][0] === 25 && this.piece.rotations % 2 !== 0 && this.piece.type === 'I') ||
       this.piece.squares[i][0] === 225 && this.piece.rotations % 2 !== 0 ||
-      (this.piece.squares[i][0] === 200 && this.piece.rotations % 2 !== 0 && (this.piece.type !== 'T')) ||
-      (this.grid[Math.ceil(y/25) - 2][Math.ceil(x/25) + 2] === 'filled' && this.piece.type !== 'T') ||
+      (this.piece.squares[i][0] === 200 && this.piece.rotations % 2 !== 0 && (this.piece.type !== 'T')
+    && (this.piece.type !== 'S') && (this.piece.type !== 'Z') && (this.piece.type !== 'J') &&
+  (this.piece.type !== 'L')) ||
+      (this.grid[Math.ceil(y/25) - 2][Math.ceil(x/25) + 2] === 'filled' && this.piece.type !== 'T'
+    && (this.piece.type !== 'S') && (this.piece.type !== 'Z') && (this.piece.type !== 'J') &&
+  (this.piece.type !== 'L')) ||
       (this.grid[Math.ceil(y/25) - 1][Math.ceil(x/25) + 1] === 'filled') ||
       (this.grid[Math.ceil(y/25) + 1][Math.ceil(x/25) + 1] === 'filled') ||
       (this.grid[Math.ceil(y/25) - 1][Math.ceil(x/25) - 1] === 'filled') ||
-      (this.grid[Math.ceil(y/25) + 2][Math.ceil(x/25) - 2] === 'filled' && this.piece.type !== 'T') ||
+      (this.grid[Math.ceil(y/25) + 2][Math.ceil(x/25) - 2] === 'filled' && this.piece.type !== 'T'
+      && (this.piece.type !== 'S') && (this.piece.type !== 'Z') && (this.piece.type !== 'J') &&
+    (this.piece.type !== 'L')) ||
       (this.grid[Math.ceil(y/25) + 1][Math.ceil(x/25) - 1] === 'filled')) {
         return true;
       }
@@ -211,36 +218,40 @@ class Board {
         if (this.piece.type === 'I') {
           if (this.rotationCheck()) return;
             if (this.piece.rotations === 0){
-              this.piece.squares[0][0] += 25;
+              this.piece.squares[0][0] += 50;
               this.piece.squares[0][1] -= 25;
-              this.piece.squares[2][0] -= 25;
+              this.piece.squares[1][0] += 25;
               this.piece.squares[2][1] += 25;
-              this.piece.squares[3][0] -= 50;
+              this.piece.squares[3][0] -= 25;
               this.piece.squares[3][1] += 50;
+
+
               this.piece.rotations += 1;
           } else if (this.piece.rotations === 1){
-            this.piece.squares[0][0] -= 25;
-            this.piece.squares[0][1] += 25;
-            this.piece.squares[2][0] += 25;
-            this.piece.squares[2][1] -= 25;
-            this.piece.squares[3][0] += 50;
-            this.piece.squares[3][1] -= 50;
+            this.piece.squares[0][0] += 25;
+            this.piece.squares[0][1] += 50;
+            this.piece.squares[1][1] += 25;
+            this.piece.squares[2][0] -= 25;
+            this.piece.squares[3][0] -= 50;
+            this.piece.squares[3][1] -= 25;
+
+
             this.piece.rotations += 1;
           } else if (this.piece.rotations === 2){
-            this.piece.squares[0][0] += 25;
-            this.piece.squares[0][1] -= 25;
-            this.piece.squares[2][0] -= 25;
-            this.piece.squares[2][1] += 25;
-            this.piece.squares[3][0] -= 50;
-            this.piece.squares[3][1] += 50;
+            this.piece.squares[0][0] -= 50;
+            this.piece.squares[0][1] += 25;
+            this.piece.squares[1][0] -= 25;
+            this.piece.squares[2][1] -= 25;
+            this.piece.squares[3][0] += 25;
+            this.piece.squares[3][1] -= 50;
             this.piece.rotations += 1;
           } else if (this.piece.rotations === 3){
             this.piece.squares[0][0] -= 25;
-            this.piece.squares[0][1] += 25;
+            this.piece.squares[0][1] -= 50;
+            this.piece.squares[1][1] -= 25;
             this.piece.squares[2][0] += 25;
-            this.piece.squares[2][1] -= 25;
             this.piece.squares[3][0] += 50;
-            this.piece.squares[3][1] -= 50;
+            this.piece.squares[3][1] += 25;
             this.piece.rotations = 0;
           }
         }
@@ -312,6 +323,131 @@ class Board {
               this.piece.squares[2][0] -= 25;
               this.piece.squares[2][1] -= 25;
               this.piece.squares[3][1] -= 50;
+              this.piece.rotations = 0;
+            }
+
+        }
+        if (this.piece.type === 'Z') {
+          if(this.rotationCheck()) return;
+            if (this.piece.rotations === 0){
+              this.piece.squares[0][0] += 50;
+              this.piece.squares[1][0] += 25;
+              this.piece.squares[1][1] += 25;
+              this.piece.squares[3][0] -= 25;
+              this.piece.squares[3][1] += 25;
+
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 1){
+              this.piece.squares[0][1] += 50;
+              this.piece.squares[1][0] -= 25;
+              this.piece.squares[1][1] += 25;
+              this.piece.squares[3][0] -= 25;
+              this.piece.squares[3][1] -= 25;
+
+
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 2){
+              this.piece.squares[0][0] -= 50;
+              this.piece.squares[1][0] -= 25;
+              this.piece.squares[1][1] -= 25;
+              this.piece.squares[3][0] += 25;
+              this.piece.squares[3][1] -= 25;
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 3){
+              this.piece.squares[0][1] -= 50;
+              this.piece.squares[1][0] += 25;
+              this.piece.squares[1][1] -= 25;
+              this.piece.squares[3][0] += 25;
+              this.piece.squares[3][1] += 25;
+              this.piece.rotations = 0;
+            }
+
+        }
+        if (this.piece.type === 'J') {
+          if(this.rotationCheck()) return;
+            if (this.piece.rotations === 0){
+              this.piece.squares[0][0] += 50;
+              this.piece.squares[1][0] += 25;
+              this.piece.squares[1][1] -= 25;
+              this.piece.squares[3][0] -= 25;
+              this.piece.squares[3][1] += 25;
+
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 1){
+              this.piece.squares[0][1] += 50;
+              this.piece.squares[1][0] += 25;
+              this.piece.squares[1][1] += 25;
+              this.piece.squares[3][0] -= 25;
+              this.piece.squares[3][1] -= 25;
+
+
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 2){
+              this.piece.squares[0][0] -= 50;
+              this.piece.squares[1][0] -= 25;
+              this.piece.squares[1][1] += 25;
+              this.piece.squares[3][0] += 25;
+              this.piece.squares[3][1] -= 25;
+
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 3){
+              this.piece.squares[0][1] -= 50;
+              this.piece.squares[1][0] -= 25;
+              this.piece.squares[1][1] -= 25;
+              this.piece.squares[3][0] += 25;
+              this.piece.squares[3][1] += 25;
+
+              this.piece.rotations = 0;
+            }
+
+        }
+        if (this.piece.type === 'L') {
+          if(this.rotationCheck()) return;
+            if (this.piece.rotations === 0){
+              this.piece.squares[0][1] += 50;
+              this.piece.squares[1][0] += 25;
+              this.piece.squares[1][1] -= 25;
+              this.piece.squares[3][0] -= 25;
+              this.piece.squares[3][1] += 25;
+
+
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 1){
+              this.piece.squares[0][0] -= 50;
+              this.piece.squares[1][0] += 25;
+              this.piece.squares[1][1] += 25;
+              this.piece.squares[3][0] -= 25;
+              this.piece.squares[3][1] -= 25;
+
+
+
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 2){
+              this.piece.squares[0][1] -= 50;
+              this.piece.squares[1][0] -= 25;
+              this.piece.squares[1][1] += 25;
+              this.piece.squares[3][0] += 25;
+              this.piece.squares[3][1] -= 25;
+
+
+              this.piece.rotations += 1;
+            }
+            else if (this.piece.rotations === 3){
+              this.piece.squares[0][0] += 50;
+              this.piece.squares[1][0] -= 25;
+              this.piece.squares[1][1] -= 25;
+              this.piece.squares[3][0] += 25;
+              this.piece.squares[3][1] += 25;
+
+
               this.piece.rotations = 0;
             }
 
@@ -403,13 +539,13 @@ function randomColor() {
 
 
 const PIECE_TYPES = [
-  // 'I',
-  // 'O',
-  // 'T',
-  'S'
-  // 'Z',
-  // 'J',
-  // 'L'
+  'I',
+  'O',
+  'T',
+  'S',
+  'Z',
+  'J',
+  'L'
 ];
 
 class Piece {
@@ -461,17 +597,17 @@ class Piece {
     else if (this.type === 'J') {
       this.squares = [
       [100,0],
-      [125,0],
-      [150,0],
+      [100,25],
+      [125,25],
       [150,25]
       ];
     }
     else if (this.type === 'L') {
       this.squares = [
-      [100,0],
+      [150,0],
       [100,25],
-      [125,0],
-      [150,0]
+      [125,25],
+      [150,25]
       ];
     }
     this.rotations = 0;
