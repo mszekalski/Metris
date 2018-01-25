@@ -450,16 +450,16 @@ class Board {
       });
       for (let i = this.grid.length - 1; i >= 0; i--) {
         if (this.grid[i].every(el => el === 'filled')) {
-          this.grid.splice(i, 1);
-          this.grid.unshift(new Array(10));
           for (let j = 0; j < this.pieces.length; j++) {
-            for (let k = 0; k < this.pieces[j].squares.length; k++){
+            for (let k = this.pieces[j].squares.length - 1; k >= 0; k--){
               if ((this.pieces[j].squares[k][1])/25 === i) {
-                this.pieces[j].squares[k].splice(k);
-                console.log(`delete row ${i}`);
+                this.pieces[j].squares.splice(k, 1);
+
               }
             }
           }
+          this.grid.splice(i, 1);
+          this.grid.unshift(new Array(10));
         }
       }
       this.piece = this.addPiece();
@@ -505,20 +505,20 @@ function randomColor() {
 
 
 const PIECE_TYPES = [
-  'I',
-  'O',
-  'T',
-  'S',
-  'Z',
-  'J',
-  'L'
+  'I'
+  // 'O',
+  // 'T',
+  // 'S',
+  // 'Z',
+  // 'J',
+  // 'L'
 ];
 
 class Piece {
 
   constructor() {
     this.type = PIECE_TYPES[Math.floor(Math.random() * PIECE_TYPES.length)];
-  
+
     this.landed = false;
     this.color = randomColor();
     if (this.type === 'I') {
