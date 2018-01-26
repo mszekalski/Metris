@@ -513,13 +513,13 @@ function randomColor() {
 
 
 const PIECE_TYPES = [
-  'I'
-  // 'O',
-  // 'T',
-  // 'S',
-  // 'Z',
-  // 'J',
-  // 'L'
+  'I',
+  'O',
+  'T',
+  'S',
+  'Z',
+  'J',
+  'L'
 ];
 
 class Piece {
