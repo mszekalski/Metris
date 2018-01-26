@@ -461,10 +461,10 @@ class Board {
         if (this.grid[i].every(el => el === 'filled')) {
           for (let l = 0; l < this.pieces.length; l++){
             for (let m = this.pieces[l].squares.length - 1; m >= 0 ; m--){
-              if ((this.pieces[l].squares[m][1]/25 === i)) {
-                this.pieces[l].squares.splice(m, 1);
-              } else if ((this.pieces[l].squares[m][1]/25) < i){
+            if ((this.pieces[l].squares[m][1]/25) < i){
                 this.pieces[l].squares[m][1] += 25;
+              }  else if ((this.pieces[l].squares[m][1]/25 === (i + 1))) {
+                  this.pieces[l].squares.splice(m, 1);
               }
             }
           }
