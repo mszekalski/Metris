@@ -432,6 +432,8 @@ class Board {
       }
   }
 
+
+
   render(ctx) {
     var currentPiece = this.pieces[this.pieces.length - 1];
     this.pieces.forEach(piece => {
@@ -439,7 +441,6 @@ class Board {
         if (typeof this.grid[Math.floor((coordinates[1]/25)) + 1] === "undefined" ||
         this.grid[Math.floor((coordinates[1]/25)) + 1][(coordinates[0]/25)] === 'filled') {
           currentPiece.landed = true;
-
         }
       });
       piece.draw(ctx);
@@ -450,16 +451,23 @@ class Board {
       });
       for (let i = this.grid.length - 1; i >= 0; i--) {
         if (this.grid[i].every(el => el === 'filled')) {
-          this.grid.splice(i, 1);
-          this.grid.unshift(new Array(10));
+
           for (let j = 0; j < this.pieces.length; j++) {
             for (let k = this.pieces[j].squares.length - 1; k >= 0; k--){
               if ((this.pieces[j].squares[k][1])/25 === i) {
                 this.pieces[j].squares.splice(k, 1);
-
               }
             }
           }
+          for (let l = 0; l < this.pieces.length; l++){
+            for (let m = 0; m < this.pieces[l].squares.length; m++){
+              if (this.pieces[l].squares[m][1]/25 < i){
+                this.pieces[l].squares[m][1] += 25;
+              }
+          }
+        }
+          this.grid.splice(i, 1);
+          this.grid.unshift(new Array(10));
         }
       }
       this.piece = this.addPiece();
@@ -505,13 +513,13 @@ function randomColor() {
 
 
 const PIECE_TYPES = [
-  'I',
-  'O',
-  'T',
-  'S',
-  'Z',
-  'J',
-  'L'
+  'I'
+  // 'O',
+  // 'T',
+  // 'S',
+  // 'Z',
+  // 'J',
+  // 'L'
 ];
 
 class Piece {
