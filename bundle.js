@@ -490,17 +490,15 @@ class Board {
       }
 
       for (let p = 0; p < this.pieces.length; p++){
-        for (let m = this.pieces[p].squares.length - 1; m >= 0 ; m--){
+        for (let m = 0; m < this.pieces[p].squares.length; m++){
           for (let r = 0; r < deletedRows.length; r++) {
-            if (Math.floor(this.pieces[p].squares[m][1]/25 < deletedRows[r])) {
-              // debugger
-              this.pieces[p].squares[m][1] += (deletedRows.length * 25);
+            if (this.pieces[p].squares[m][1]/25 <= deletedRows[r]) {
+
+              this.pieces[p].squares[m][1] += 25;
             }
           }
         }
       }
-
-
 
       for (let y = 0; y < spliceCount; y++) {
         this.createNewRow();
