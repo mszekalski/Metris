@@ -454,6 +454,7 @@ class Board {
     });
     if (this.piece.landed) {
       let spliceCount = 0;
+      let deletedRows = [];
       this.piece.squares.forEach(coordinates => {
         this.grid[Math.floor(coordinates[1]/25)][coordinates[0]/25] = 'filled';
       });
@@ -461,13 +462,18 @@ class Board {
         if (this.grid[i].every(el => el === 'filled')) {
           for (let l = 0; l < this.pieces.length; l++){
             for (let m = this.pieces[l].squares.length - 1; m >= 0 ; m--){
-            if ((Math.floor(this.pieces[l].squares[m][1]/25)) < i){
-                this.pieces[l].squares[m][1] += 25;
-              }  else if (Math.floor(this.pieces[l].squares[m][1]/25 === (i + 1))) {
+              if (Math.floor(this.pieces[l].squares[m][1]/25 === (i))) {
                   this.pieces[l].squares.splice(m, 1);
+                  if (deletedRows.indexOf(i) === -1) {
+                    deletedRows.push(i);
+                  }
               }
             }
           }
+
+          // if ((Math.floor(this.pieces[l].squares[m][1]/25)) < i){
+          //     this.pieces[l].squares[m][1] += 25;
+          //   }
 
           // for (let j = 0; j < this.pieces.length; j++) {
           //   for (let k = this.pieces[j].squares.length - 1; k >= 0; k--){
@@ -482,6 +488,20 @@ class Board {
 
         }
       }
+
+      for (let p = 0; p < this.pieces.length; p++){
+        for (let m = this.pieces[p].squares.length - 1; m >= 0 ; m--){
+          for (let r = 0; r < deletedRows.length; r++) {
+            if (Math.floor(this.pieces[p].squares[m][1]/25 < deletedRows[r])) {
+              // debugger
+              this.pieces[p].squares[m][1] += (deletedRows.length * 25);
+            }
+          }
+        }
+      }
+
+
+
       for (let y = 0; y < spliceCount; y++) {
         this.createNewRow();
       }
@@ -528,13 +548,13 @@ function randomColor() {
 
 
 const PIECE_TYPES = [
-  // 'I',
-  'O'
-  // 'T',
-  // 'S',
-  // 'Z',
-  // 'J',
-  // 'L'
+  'I',
+  'O',
+  'T',
+  'S',
+  'Z',
+  'J',
+  'L'
 ];
 
 class Piece {
