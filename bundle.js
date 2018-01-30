@@ -488,11 +488,12 @@ class Board {
 
         }
       }
-
+      const duped = this.pieces.slice();
       for (let p = 0; p < this.pieces.length; p++){
         for (let m = 0; m < this.pieces[p].squares.length; m++){
           for (let r = 0; r < deletedRows.length; r++) {
-            if (this.pieces[p].squares[m][1]/25 <= deletedRows[r]) {
+
+            if (duped[p].squares[m][1]/25 <= deletedRows[r]) {
 
               this.pieces[p].squares[m][1] += 25;
             }
@@ -547,12 +548,12 @@ function randomColor() {
 
 const PIECE_TYPES = [
   'I',
-  'O',
-  'T',
-  'S',
-  'Z',
-  'J',
-  'L'
+  // 'O'
+  'T'
+  // 'S',
+  // 'Z',
+  // 'J',
+  // 'L'
 ];
 
 class Piece {
