@@ -1,0 +1,33 @@
+body {
+  display: flex;
+}
+
+.left-content {
+  width: 33.3333333%;
+  display: flex;
+  justify-content: center;
+}
+
+
+
+#canvas {
+  width: 250px;
+  height: 500px;
+}
+
+.center-content {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  width: 33.3333333%;
+  align-items: center;
+}
+
+.header {
+  text-align: center;
+}
+
+
+.right-content {
+  width: 33.3333333%;
+}

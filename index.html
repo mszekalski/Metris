@@ -1,11 +1,29 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <link rel="stylesheet" href="assets/stylesheets/application.css" type="text/css">
+    <link rel="stylesheet" href="assets/stylesheets/game.css" type="text/css">
     <title>Metris</title>
   </head>
 <body>
-  <canvas id="canvas" style="border: 1px solid black;"></canvas>
-  <script src="bundle.js"></script>
-   <script type="application/javascript" src="vendor/keymaster.js"></script>
+  <div class='left-content'>
+    <div class='directions'>
+      <h1>DIRECTIONS</h1>
+      Use the directional keys to move the shape around as it falls.
+      Press the 'R' key to rotate the shape.
+     </div>
+  </div>
+  <div class='center-content'>
+    <div class='header'>
+      <h1 class='title'>METRIS</h1>
+      <h2 class='author'>by Matthew Szekalski</h2>
+    </div>
+    <canvas id="canvas"  style="border: 1px solid black;"></canvas>
+    <script src="bundle.js"></script>
+    <script type="application/javascript" src="vendor/keymaster.js"></script>
+  </div>
+  <div class='right-content'>
+
+  </div>
 </body>
 </html>
