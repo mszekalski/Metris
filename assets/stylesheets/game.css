@@ -1,11 +1,51 @@
+
+
 body {
   display: flex;
+  font-family: helvetica;
+
 }
 
 .left-content {
   width: 33.3333333%;
   display: flex;
   justify-content: center;
+  border-color: white 5px solid;
+  color: #1aff1a;
+
+  font-weight: bold;
+}
+
+.directions {
+  margin-top: 100px;
+}
+
+.direction-content-container {
+  background-color: black;
+  border-radius: 10px;
+  margin: 5px;
+  border: 5px solid white;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+}
+
+.direction-content {
+  font-size: 20px;
+  margin: 10px;
+
+}
+
+.direction-header {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-top: 60px;
+  font-size: 30px;
+  background-color: black;
+  border-radius: 10px;
+  margin-left: 40px;
+  margin-right: 40px;
+  border: 5px solid white;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
 }
 
 
@@ -13,6 +53,27 @@ body {
 #canvas {
   width: 250px;
   height: 500px;
+  background-color: black;
+  border-radius: 10px;
+
+}
+
+.canvas-container {
+  border: 5px solid white;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  background-color: black;
+  border-radius: 10px;
+  height: 500px;
+}
+
+.author-container {
+  margin: 10px;
+}
+
+.title-container {
+  margin: 10px;
+  font-weight: bold;
+  font-size: 35px;
 }
 
 .center-content {
@@ -21,13 +82,59 @@ body {
   flex-direction: column;
   width: 33.3333333%;
   align-items: center;
+  color: #1aff1a;
 }
 
-.header {
+.center-header {
   text-align: center;
+  background-color: black;
+  margin: 20px;
+  border: 5px solid white;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  border-radius: 10px;
 }
 
 
 .right-content {
   width: 33.3333333%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+}
+
+.icons {
+  margin-top: 100px;
+  border: 5px solid white;
+  box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
+  border-radius: 10px;
+  background-color: black;
+  font-size: 5.5em;
+  text-shadow: 1px 1px 1px
+}
+
+.icons li{
+  margin: 10px;
+  margin-left: 20px;
+  margin-right: 20px;
+}
+
+a:link {
+    text-decoration: none;
+    color: #9932CC
+}
+
+a:visited {
+    text-decoration: none;
+    color: #9932CC
+}
+
+a:hover {
+    text-decoration: underline;
+    color: #1aff1a;
+}
+
+a:active {
+    text-decoration: underline;
+    color: #1aff1a;
 }

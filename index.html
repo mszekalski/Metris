@@ -1,29 +1,57 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <script defer src="https://use.fontawesome.com/releases/v5.0.6/js/all.js"></script>
     <link rel="stylesheet" href="assets/stylesheets/application.css" type="text/css">
     <link rel="stylesheet" href="assets/stylesheets/game.css" type="text/css">
     <title>Metris</title>
   </head>
-<body>
+<body background="assets/waves-background.jpg">
   <div class='left-content'>
     <div class='directions'>
-      <h1>DIRECTIONS</h1>
-      Use the directional keys to move the shape around as it falls.
-      Press the 'R' key to rotate the shape.
+      <h1 class='direction-header'>DIRECTIONS</h1>
+      <div class='direction-content-container'>
+        <p class='direction-content'>Use the directional keys to move the shape around as it falls.
+          Press the 'R' key to rotate the shape.</p>
+      </div>
      </div>
   </div>
   <div class='center-content'>
-    <div class='header'>
-      <h1 class='title'>METRIS</h1>
-      <h2 class='author'>by Matthew Szekalski</h2>
+    <div class='center-header'>
+      <div class='title-container'>
+        <h1 class='title'>METRIS</h1>
+      </div>
+      <div class='author-container'>
+        <h2 class='author'>Matthew Szekalski</h2>
+      </div>
     </div>
-    <canvas id="canvas"  style="border: 1px solid black;"></canvas>
+    <div class='canvas-container'>
+
+      <canvas id="canvas"  style="border: 1px solid black;"></canvas>
+    </div>
     <script src="bundle.js"></script>
     <script type="application/javascript" src="vendor/keymaster.js"></script>
   </div>
   <div class='right-content'>
+    <ul class="icons">
 
+						<li>
+                <a href="https://www.linkedin.com/in/mszekalski/" >
+                  <i class="fab fa-linkedin">
+                  </i>
+                </a>
+          </li>
+						    <li>
+                  <a href="https://angel.co/matthew-szekalski">
+                    <i class="fab fa-angellist"></i>
+                  </a>
+                </li>
+						<li>
+              <a href="https://github.com/mszekalski" class="icon fa-github">
+                <i class="fab fa-github-square"></i>
+              </a>
+            </li>
+					</ul>
   </div>
 </body>
 </html>
