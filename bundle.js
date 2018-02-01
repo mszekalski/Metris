@@ -78,9 +78,15 @@ document.addEventListener("DOMContentLoaded", () => {
   var ctx = canvas.getContext('2d');
   canvas.width = __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */].DIM_X;
   canvas.height = __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */].DIM_Y;
-  
   const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */](ctx);
-  game.start();
+  const gameStartCallback = () => {
+    game.start();
+    canvas.removeEventListener('click', gameStartCallback);
+  };
+  ctx.font = '15pt helvetica';
+  ctx.fillStyle = '#1aff1a';
+  ctx.fillText('CLICK TO START', 45, 100);
+  canvas.addEventListener('click', gameStartCallback);
 });
 
 
@@ -97,16 +103,34 @@ class Game {
   constructor(ctx) {
     this.ctx = ctx;
     this.board = new __WEBPACK_IMPORTED_MODULE_0__board__["a" /* default */](this.ctx);
+    this.paused = false;
+    this.bindEvents();
+    this.gameOver = false;
   }
 
   start() {
     this.render(this.ctx);
   }
 
+  bindEvents() {
+    document.addEventListener('keydown', this.pauseGame.bind(this));
+  }
+
+  pauseGame(e) {
+    if (e.keyCode === 32 && this.paused === false) {
+      this.paused = true;
+    } else  {
+      this.paused = false;
+      this.render(this.ctx);
+    }
+  }
+
   render(ctx) {
-    this.ctx.clearRect(0, 0, 300, 500);
-    this.board.render(this.ctx);
-    requestAnimationFrame(this.render.bind(this));
+    if (this.paused === true) return;
+      this.ctx.clearRect(0, 0, 300, 500);
+      this.board.render(this.ctx);
+      requestAnimationFrame(this.render.bind(this));
+
   }
 }
 
@@ -170,6 +194,7 @@ class Board {
 
   handleKeyPress(e) {
 
+
     if (e.key === "ArrowLeft") {
       for (let i = 0; i < this.piece.squares.length; i++){
         let x = this.piece.squares[i][0];
@@ -209,6 +234,8 @@ class Board {
         this.piece.squares[i][1] += 20;
       }
     }
+
+
 
       if (e.key === "r" || e.key === "R") {
         if (this.piece.type === 'O'){
@@ -453,6 +480,7 @@ class Board {
       piece.draw(ctx);
     });
     if (this.piece.landed) {
+    
       let spliceCount = 0;
       let deletedRows = [];
       this.piece.squares.forEach(coordinates => {
@@ -471,24 +499,12 @@ class Board {
             }
           }
 
-          // if ((Math.floor(this.pieces[l].squares[m][1]/25)) < i){
-          //     this.pieces[l].squares[m][1] += 25;
-          //   }
-
-          // for (let j = 0; j < this.pieces.length; j++) {
-          //   for (let k = this.pieces[j].squares.length - 1; k >= 0; k--){
-          //     if ((this.pieces[j].squares[k][1])/25 === (i + 1)) {
-          //       this.pieces[j].squares.splice(k, 1);
-          //     }
-          //   }
-          // }
-
           this.grid.splice(i, 1);
           spliceCount += 1;
 
         }
       }
-      // const duped = this.pieces.slice();
+
       for (let p = 0; p < this.pieces.length; p++){
         for (let m = 0; m < this.pieces[p].squares.length; m++){
           for (let r = deletedRows.length - 1; r >= 0; r--) {
@@ -627,6 +643,7 @@ class Piece {
   }
 
   down(ctx) {
+    // debugger
     if (this.landed) return;
       for (let i = 0; i < this.squares.length; i++) {
         this.squares[i][1] += 1;
