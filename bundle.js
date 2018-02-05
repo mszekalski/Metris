@@ -84,13 +84,13 @@ document.addEventListener("DOMContentLoaded", () => {
     game.start();
     canvas.removeEventListener('click', gameStartCallback);
   };
-  
+
   ctx.font = '15pt helvetica';
   ctx.fillStyle = '#1aff1a';
   canvas.style.border = "none";
   ctx.fillText('CLICK TO START', 45, 200);
   canvas.addEventListener('click', gameStartCallback);
-
+  
 
 });
 
@@ -109,6 +109,8 @@ class Game {
     this.ctx = ctx;
     this.score = 0;
     this.bindEvents();
+    document.querySelector('.score').innerHTML = "SCORE: " + 0;
+
   }
 
 
@@ -117,7 +119,8 @@ class Game {
     this.board = new __WEBPACK_IMPORTED_MODULE_0__board__["a" /* default */](this.ctx);
     this.paused = false;
     this.render(this.ctx);
-    this.score = 0;
+    this.board.score = 0;
+    document.querySelector('.score').innerHTML = "SCORE: " + this.board.score;
 
   }
 
@@ -129,6 +132,7 @@ class Game {
   pauseAndRestart(e) {
 
     if (e.keyCode === 32 && this.board.gameOver === false) {
+      this.board.paused = !this.board.paused;
       this.paused = !this.paused;
     }
 
@@ -172,6 +176,8 @@ Game.DIM_Y = 550;
 class Board {
   constructor(ctx) {
     this.gameOver = false;
+    this.paused = false;
+    this.score = 0;
     this.ctx = ctx;
     this.pieces = [];
     this.bindEvents();
@@ -186,6 +192,7 @@ class Board {
   }
 
   rotationCheck() {
+
     for (let i = 0; i < this.piece.squares.length; i++) {
       let x = this.piece.squares[i][0];
       let y = this.piece.squares[i][1];
@@ -216,7 +223,7 @@ class Board {
 
   handleKeyPress(e) {
 
-
+  if (!this.paused) {
     if (e.key === "ArrowLeft") {
       for (let i = 0; i < this.piece.squares.length; i++){
         let x = this.piece.squares[i][0];
@@ -479,6 +486,7 @@ class Board {
             }
         }
       }
+    }
   }
 
   createNewRow() {
@@ -508,7 +516,7 @@ class Board {
       this.piece.squares.forEach(coordinates => {
         if (coordinates[1] < 50) {
           this.gameOver = true;
-          console.log('gameOver')
+
 
         }
         this.grid[Math.floor(coordinates[1]/25)][coordinates[0]/25] = 'filled';
@@ -521,6 +529,8 @@ class Board {
                   this.pieces[l].squares.splice(m, 1);
                   if (deletedRows.indexOf(i) === -1) {
                     deletedRows.push(i);
+                    this.score += 10;
+                    document.querySelector('.score').innerHTML = "SCORE: " + this.score;
                   }
               }
             }
@@ -557,7 +567,7 @@ class Board {
   }
 
   addPiece() {
-    
+
 
       const piece = new __WEBPACK_IMPORTED_MODULE_0__piece__["a" /* default */]();
       this.pieces.push(piece);
