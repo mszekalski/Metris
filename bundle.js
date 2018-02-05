@@ -78,16 +78,20 @@ document.addEventListener("DOMContentLoaded", () => {
   var ctx = canvas.getContext('2d');
   canvas.width = __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */].DIM_X;
   canvas.height = __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */].DIM_Y;
-  
+
   const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */](ctx);
   const gameStartCallback = () => {
     game.start();
     canvas.removeEventListener('click', gameStartCallback);
   };
+  
   ctx.font = '15pt helvetica';
   ctx.fillStyle = '#1aff1a';
-  ctx.fillText('CLICK TO START', 45, 100);
+  canvas.style.border = "none";
+  ctx.fillText('CLICK TO START', 45, 200);
   canvas.addEventListener('click', gameStartCallback);
+
+
 });
 
 
@@ -103,40 +107,55 @@ document.addEventListener("DOMContentLoaded", () => {
 class Game {
   constructor(ctx) {
     this.ctx = ctx;
-    this.board = new __WEBPACK_IMPORTED_MODULE_0__board__["a" /* default */](this.ctx);
-    this.paused = false;
+
     this.bindEvents();
-    this.gameOver = false;
   }
 
+
+
   start() {
+    this.board = new __WEBPACK_IMPORTED_MODULE_0__board__["a" /* default */](this.ctx);
+    this.paused = false;
     this.render(this.ctx);
 
   }
 
   bindEvents() {
-    document.addEventListener('keydown', this.pauseGame.bind(this));
+    document.addEventListener('keydown', this.pauseAndRestart.bind(this));
+    // document.addEventListener('keydown', this.restartGame.bind(this));
   }
 
-  pauseGame(e) {
-    if (e.keyCode === 32 ) {
+  pauseAndRestart(e) {
+
+    if (e.keyCode === 32 && this.board.gameOver === false) {
       this.paused = !this.paused;
     }
+
+    if (e.keyCode === 32 && this.board.gameOver === true) {
+      // debugger
+      this.start();
+
+    }
   }
 
-  render(ctx) {
-    if (this.paused === false) {
 
-      this.ctx.clearRect(0, 0, 300, 500);
+  render(ctx) {
+    if (this.board.gameOver === true) {
+      this.ctx.clearRect(0, 0, 300, 600);
+      this.ctx.fillStyle = '#1aff1a';
+      this.ctx.fillText('GAME OVER', 68, 200);
+      return;
+    }
+    else if (this.paused === false) {
+      this.ctx.clearRect(0, 50, 300, 600);
       this.board.render(this.ctx);
     }
-      requestAnimationFrame(this.render.bind(this));
-
+    requestAnimationFrame(this.render.bind(this));
   }
 }
 
 Game.DIM_X = 250;
-Game.DIM_Y = 500;
+Game.DIM_Y = 550;
 
 /* harmony default export */ __webpack_exports__["a"] = (Game);
 
@@ -151,17 +170,18 @@ Game.DIM_Y = 500;
 
 class Board {
   constructor(ctx) {
+    this.gameOver = false;
     this.ctx = ctx;
     this.pieces = [];
-    this.piece = this.addPiece();
     this.bindEvents();
-    this.grid = new Array(20);
+    this.grid = new Array(22);
     for (let i = 0; i < this.grid.length; i++){
       this.grid[i] = new Array(10);
       for (let j = 0; j < this.grid[i].length; j++) {
         this.grid[i][j] = null;
       }
     }
+    this.piece = this.addPiece();
   }
 
   rotationCheck() {
@@ -485,7 +505,11 @@ class Board {
       let spliceCount = 0;
       let deletedRows = [];
       this.piece.squares.forEach(coordinates => {
+        if (coordinates[1] < 50) {
+          this.gameOver = true;
+          console.log('gameOver')
 
+        }
         this.grid[Math.floor(coordinates[1]/25)][coordinates[0]/25] = 'filled';
       });
       for (let i = this.grid.length - 1; i >= 0; i--) {
@@ -527,14 +551,25 @@ class Board {
   }
 
   start(ctx) {
-    ctx.clearRect(0, 0, 300, 500);
+    ctx.clearRect(0, 50, 300, 600);
       this.bindEvents();
   }
 
   addPiece() {
-    const piece = new __WEBPACK_IMPORTED_MODULE_0__piece__["a" /* default */]();
-    this.pieces.push(piece);
-    return piece;
+    
+
+      const piece = new __WEBPACK_IMPORTED_MODULE_0__piece__["a" /* default */]();
+      this.pieces.push(piece);
+      for (let i = 0; i < piece.squares.length; i++){
+
+
+        if (this.grid[Math.floor(piece.squares[i][1]/25)][piece.squares[i][0]/25] === 'filled') {
+          piece.squares[i][1] -= 25;
+        }
+      }
+      // debugger
+      return piece;
+
   }
 }
 
@@ -579,59 +614,61 @@ class Piece {
     this.color = randomColor();
     if (this.type === 'I') {
       this.squares = [
-      [75,0],
-      [100,0],
-      [125,0],
-      [150,0]
+      [75,50],
+      [100,50],
+      [125,50],
+      [150,50]
     ];
   } else if (this.type === 'O') {
       this.squares = [
-      [100,0],
-      [125,0],
-      [100,25],
-      [125,25]
+      [100,50],
+      [125,50],
+      [100,75],
+      [125,75]
       ];
     }
     else if (this.type === 'T') {
       this.squares = [
-      [100,0],
-      [125,0],
-      [150,0],
-      [125,25]
+      [100,50],
+      [125,50],
+      [150,50],
+      [125,75]
       ];
     }
     else if (this.type === 'S') {
       this.squares = [
-      [100,25],
-      [125,25],
-      [125,0],
-      [150,0]
+      [100,75],
+      [125,75],
+      [125,50],
+      [150,50]
       ];
     }
     else if (this.type === 'Z') {
       this.squares = [
-      [100,0],
-      [125,0],
-      [125,25],
-      [150,25]
+      [100,50],
+      [125,50],
+      [125,75],
+      [150,75]
       ];
     }
     else if (this.type === 'J') {
       this.squares = [
-      [100,0],
-      [100,25],
-      [125,25],
-      [150,25]
+      [100,50],
+      [100,75],
+      [125,75],
+      [150,75]
       ];
     }
     else if (this.type === 'L') {
       this.squares = [
-      [150,0],
-      [100,25],
-      [125,25],
-      [150,25]
+      [150,50],
+      [100,75],
+      [125,75],
+      [150,75]
       ];
     }
+
+    
     this.rotations = 0;
   }
 
@@ -648,7 +685,7 @@ class Piece {
       for (let i = 0; i < this.squares.length; i++) {
         this.squares[i][1] += 1;
         this.squares.forEach(coordinates => {
-          if (coordinates[1] > 475) {
+          if (coordinates[1] > 525) {
             this.landed = true;
 
           }

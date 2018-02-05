@@ -49,22 +49,27 @@ body {
 }
 
 
-
-#canvas {
-  width: 250px;
-  height: 500px;
-  background-color: black;
-  border-radius: 10px;
-
-}
-
 .canvas-container {
+
+
   border: 5px solid white;
   box-shadow: 5px 5px 10px rgba(0,0,0,0.5);
   background-color: black;
   border-radius: 10px;
   height: 500px;
+
 }
+
+#canvas {
+  width: 250px;
+  height: 550px;
+  background-color: transparent;
+  
+  position: relative;
+  top: -50px;
+
+}
+
 
 .author-container {
   margin: 10px;
