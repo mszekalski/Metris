@@ -78,6 +78,7 @@ document.addEventListener("DOMContentLoaded", () => {
   var ctx = canvas.getContext('2d');
   canvas.width = __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */].DIM_X;
   canvas.height = __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */].DIM_Y;
+  
   const game = new __WEBPACK_IMPORTED_MODULE_0__game__["a" /* default */](ctx);
   const gameStartCallback = () => {
     game.start();
@@ -110,6 +111,7 @@ class Game {
 
   start() {
     this.render(this.ctx);
+
   }
 
   bindEvents() {
@@ -144,7 +146,7 @@ Game.DIM_Y = 500;
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
-/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__piece__ = __webpack_require__(5);
+/* harmony import */ var __WEBPACK_IMPORTED_MODULE_0__piece__ = __webpack_require__(3);
 
 
 class Board {
@@ -474,15 +476,16 @@ class Board {
         if (typeof this.grid[Math.floor((coordinates[1]/25)) + 1] === "undefined" ||
         this.grid[Math.floor((coordinates[1]/25)) + 1][(coordinates[0]/25)] === 'filled') {
           currentPiece.landed = true;
+
         }
       });
       piece.draw(ctx);
     });
     if (this.piece.landed) {
-    
       let spliceCount = 0;
       let deletedRows = [];
       this.piece.squares.forEach(coordinates => {
+
         this.grid[Math.floor(coordinates[1]/25)][coordinates[0]/25] = 'filled';
       });
       for (let i = this.grid.length - 1; i >= 0; i--) {
@@ -539,9 +542,7 @@ class Board {
 
 
 /***/ }),
-/* 3 */,
-/* 4 */,
-/* 5 */
+/* 3 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
