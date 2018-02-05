@@ -107,7 +107,7 @@ document.addEventListener("DOMContentLoaded", () => {
 class Game {
   constructor(ctx) {
     this.ctx = ctx;
-
+    this.score = 0;
     this.bindEvents();
   }
 
@@ -117,6 +117,7 @@ class Game {
     this.board = new __WEBPACK_IMPORTED_MODULE_0__board__["a" /* default */](this.ctx);
     this.paused = false;
     this.render(this.ctx);
+    this.score = 0;
 
   }
 
