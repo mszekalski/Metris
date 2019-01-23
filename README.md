@@ -16,7 +16,7 @@ Metris is a vanilla Javascript game, that emulates the classic block stacking ga
 
 #### Game Logic
 
-Game logic in Metris required createing a grid (represented by an array of arrays) and then filling that grid with pieces, then translating that grid into a pixel representation on the canvas. This required some complicated logic to make sure pieces stay on the board laterally, land correctly on the bottom or on top of other pieces, and rotate correctly. The function below represents just one of the game logic functions in Metris, but demonstrates how complicated they can become because of the different styles of pieces and the requirment that all scenarios be accounted for.
+Game logic in Metris required creating a grid (represented by an array of arrays) and then filling that grid with pieces, then translating that grid into a pixel representation on the canvas. This required some complicated logic to make sure pieces stay on the board laterally, land correctly on the bottom or on top of other pieces, and rotate correctly. The function below represents just one of the game logic functions in Metris, but demonstrates how complicated they can become because of the different styles of pieces and the requirment that all scenarios be accounted for.
 
 ```
 rotationCheck() {
