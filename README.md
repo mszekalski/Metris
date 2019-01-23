@@ -10,6 +10,8 @@ http://mattski.codes/Metris//
 
 Metris is a vanilla Javascript game, that emulates the classic block stacking game, Tetris. It also uses HTML5 Canvas to render the graphics of the game board onto the browser's DOM.
 
+![](Metris.gif)
+
 ## Highlights
 
 #### Game Logic
